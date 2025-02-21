@@ -57,18 +57,18 @@ function App() {
   return (
     <div style={containerStyle}>
       {/* 🔹 로고 */}
-      <div style={logoContainerStyle}>
+      {/* <div style={logoContainerStyle}>
         <img
           src="https://your-logo-url.com/logo.png" // 🔹 로고 이미지 URL 추가
           alt="Plocka Logo"
           style={logoStyle}
         />
-      </div>
+      </div> */}
 
       {/* 🔹 구글 로그인 버튼 */}
       <button onClick={handleLogin} style={googleButtonStyle}>
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+          src="https://e7.pngegg.com/pngimages/734/947/png-clipart-google-logo-google-g-logo-icons-logos-emojis-tech-companies-thumbnail.png"
           alt="Google Logo"
           style={{ width: 20, marginRight: 8 }}
         />
@@ -120,14 +120,13 @@ const googleButtonStyle = {
   bottom: "15%", // 화면 하단에서 15% 지점에 위치
   display: "inline-flex",
   alignItems: "center",
-  backgroundColor: "#fff",
+  backgroundColor: "#F2F2F2",
   color: "#444",
   border: "1px solid #ddd",
   borderRadius: 24, // pill 모양
   padding: "10px 20px",
   fontSize: 14,
   cursor: "pointer",
-  boxShadow: "0 2px 2px rgba(0,0,0,0.2)",
 }
 
 // 🔹 토스트 (화면 하단)
