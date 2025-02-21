@@ -95,14 +95,13 @@ const containerStyle = {
 const googleButtonStyle = {
   display: "inline-flex",
   alignItems: "center",
-  backgroundColor: "#fff",
+  backgroundColor: "#F2F2F2",
   color: "#444",
   border: "1px solid #ddd",
   borderRadius: 24, // pill 모양
   padding: "10px 20px",
   fontSize: 14,
   cursor: "pointer",
-  boxShadow: "0 2px 2px rgba(0,0,0,0.2)",
 }
 
 // 토스트 (화면 하단)
