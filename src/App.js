@@ -57,13 +57,10 @@ function App() {
 
   return (
     <div style={containerStyle}>
-      <h2>Google Login</h2>
-      <p>안내 문구나 로고 등을 여기에 배치할 수 있습니다.</p>
-
       {/* 🔹 구글 로그인 버튼 */}
       <button onClick={handleLogin} style={googleButtonStyle}>
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+          src="https://e7.pngegg.com/pngimages/734/947/png-clipart-google-logo-google-g-logo-icons-logos-emojis-tech-companies-thumbnail.png"
           alt="Google Logo"
           style={{ width: 20, marginRight: 8 }}
         />
