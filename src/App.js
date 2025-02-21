@@ -5,7 +5,6 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 
 // 1) Firebase 설정
 const firebaseConfig = {
-  // 🔸 여기에 본인의 Firebase 설정 정보 입력!
   apiKey: "AIzaSyDZaaHJwsIA34Kwx1Uz7m1ZuaUCBldS-Lk",
   authDomain: "ploka-be736.firebaseapp.com",
   projectId: "ploka-be736",
@@ -57,10 +56,19 @@ function App() {
 
   return (
     <div style={containerStyle}>
+      {/* 🔹 로고 */}
+      <div style={logoContainerStyle}>
+        <img
+          src="https://your-logo-url.com/logo.png" // 🔹 로고 이미지 URL 추가
+          alt="Plocka Logo"
+          style={logoStyle}
+        />
+      </div>
+
       {/* 🔹 구글 로그인 버튼 */}
       <button onClick={handleLogin} style={googleButtonStyle}>
         <img
-          src="https://e7.pngegg.com/pngimages/734/947/png-clipart-google-logo-google-g-logo-icons-logos-emojis-tech-companies-thumbnail.png"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
           alt="Google Logo"
           style={{ width: 20, marginRight: 8 }}
         />
@@ -81,7 +89,7 @@ export default App
 
 // 🔹 스타일들
 
-// 화면 중앙 배치용
+// 전체 화면 설정
 const containerStyle = {
   display: "flex",
   flexDirection: "column",
@@ -89,22 +97,40 @@ const containerStyle = {
   justifyContent: "center",
   height: "100vh",
   fontFamily: "Arial, sans-serif",
+  position: "relative", // 버튼 위치 조정용
 }
 
-// 구글 로그인 버튼 스타일
+// 🔹 로고 스타일
+const logoContainerStyle = {
+  position: "absolute",
+  top: "25%", // 화면 상단에서 25% 지점
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+}
+
+const logoStyle = {
+  width: "100px", // 로고 크기 조절 가능
+  marginBottom: "20px",
+}
+
+// 🔹 구글 로그인 버튼 스타일 (중앙 하단 배치)
 const googleButtonStyle = {
+  position: "absolute",
+  bottom: "15%", // 화면 하단에서 15% 지점에 위치
   display: "inline-flex",
   alignItems: "center",
-  backgroundColor: "#F2F2F2",
+  backgroundColor: "#fff",
   color: "#444",
   border: "1px solid #ddd",
   borderRadius: 24, // pill 모양
   padding: "10px 20px",
   fontSize: 14,
   cursor: "pointer",
+  boxShadow: "0 2px 2px rgba(0,0,0,0.2)",
 }
 
-// 토스트 (화면 하단)
+// 🔹 토스트 (화면 하단)
 const toastStyle = {
   position: "fixed",
   bottom: 20,
