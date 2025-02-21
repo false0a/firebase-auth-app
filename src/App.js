@@ -1,19 +1,19 @@
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
+import React from "react"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Home from "./Home"
+import MainPage from "./MainPage"
 
-const auth = getAuth()
-const provider = new GoogleAuthProvider()
-
-const handleLogin = async () => {
-    try {
-        const result = await signInWithPopup(auth, provider)
-        console.log("✅ 로그인 성공:", result.user)
-
-        // ✅ 상위 창(Framer)으로 로그인 성공 메시지 전송
-        window.parent.postMessage({ type: "loginSuccess" }, "*")
-    } catch (error) {
-        console.error("❌ 로그인 실패:", error)
-
-        // ✅ 로그인 실패 시 상위 창(Framer)으로 실패 메시지 전송
-        window.parent.postMessage({ type: "loginFailure", message: error.message }, "*")
-    }
+function App() {
+    return (
+        <Router>
+            <Routes>
+                {/* 기본 로그인 페이지 (Vercel에서 iframe으로 연결됨) */}
+                <Route path="/" element={<Home />} />
+                {/* 로그인 성공 후 이동할 페이지 */}
+                <Route path="/main" element={<MainPage />} />
+            </Routes>
+        </Router>
+    )
 }
+
+export default App // ✅ 반드시 있어야 함!
