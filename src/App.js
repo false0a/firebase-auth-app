@@ -1,31 +1,19 @@
-import React, { useState } from "react"
-import { signInWithGoogle } from "./firebase"
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 
-function App() {
-    const [user, setUser] = useState(null)
+const auth = getAuth()
+const provider = new GoogleAuthProvider()
 
-    const handleLogin = async () => {
-        const loggedInUser = await signInWithGoogle()
-        if (loggedInUser) {
-            setUser(loggedInUser)
-        }
+const handleLogin = async () => {
+    try {
+        const result = await signInWithPopup(auth, provider)
+        console.log("✅ 로그인 성공:", result.user)
+
+        // ✅ 상위 창(Framer)으로 로그인 성공 메시지 전송
+        window.parent.postMessage({ type: "loginSuccess" }, "*")
+    } catch (error) {
+        console.error("❌ 로그인 실패:", error)
+
+        // ✅ 로그인 실패 시 상위 창(Framer)으로 실패 메시지 전송
+        window.parent.postMessage({ type: "loginFailure", message: error.message }, "*")
     }
-
-    return (
-        <div style={{ textAlign: "center", padding: "50px" }}>
-            <h1>Google Login</h1>
-            {user ? (
-                <div>
-                    <p>✅ 로그인 성공: {user.displayName}</p>
-                    <img src={user.photoURL} alt="profile" width="50" />
-                </div>
-            ) : (
-                <button onClick={handleLogin} style={{ padding: "10px 20px", fontSize: "16px" }}>
-                    Sign in with Google
-                </button>
-            )}
-        </div>
-    )
 }
-
-export default App
