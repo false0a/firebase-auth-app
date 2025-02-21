@@ -1,84 +1,78 @@
 import React, { useState } from "react"
+// 🔹 Firebase SDK
+import { initializeApp } from "firebase/app"
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 
-// 예시용 Firebase 로그인 함수 (실제 구현 시 firebase.js에서 import해서 사용)
-async function signInWithGoogle() {
-  // 여기에 실제 Firebase 구글 로그인 로직 (signInWithPopup 등) 추가
-  // 성공 시 user 객체 반환, 실패 시 throw error
-  return new Promise((resolve, reject) => {
-    const isSuccess = true // 테스트용 (실제로는 Firebase 로그인 결과에 따라 true/false)
-    setTimeout(() => {
-      if (isSuccess) {
-        resolve({ displayName: "사용자", email: "test@example.com" })
-      } else {
-        reject(new Error("로그인에 실패했습니다."))
-      }
-    }, 1000)
-  })
+// 1) Firebase 설정
+const firebaseConfig = {
+  // 🔸 여기에 본인의 Firebase 설정 정보 입력!
+  apiKey: "AIzaSyDZaaHJwsIA34Kwx1Uz7m1ZuaUCBldS-Lk",
+  authDomain: "ploka-be736.firebaseapp.com",
+  projectId: "ploka-be736",
+  storageBucket: "ploka-be736.appspot.com",
+  messagingSenderId: "834946972945",
+  appId: "1:834946972945:web:554deb37314634d3f660b0",
 }
 
+// 2) Firebase 초기화
+initializeApp(firebaseConfig)
+const auth = getAuth()
+const provider = new GoogleAuthProvider()
+
 function App() {
-  const [toastMessage, setToastMessage] = useState("")
-  const [toastType, setToastType] = useState("success") // "success" | "error"
+  // 🔹 토스트 UI 상태
   const [toastVisible, setToastVisible] = useState(false)
+  const [toastMessage, setToastMessage] = useState("")
+  const [toastColor, setToastColor] = useState("#4caf50") // 기본 초록색(성공)
 
   // 토스트 표시 함수
-  const showToast = (message, type = "success", duration = 2000) => {
+  const showToast = (message, isError = false, duration = 2000) => {
     setToastMessage(message)
-    setToastType(type)
+    setToastColor(isError ? "#f44336" : "#4caf50") // 실패면 빨강, 성공이면 초록
     setToastVisible(true)
-    // 지정된 시간 후 토스트 숨김
     setTimeout(() => {
       setToastVisible(false)
     }, duration)
   }
 
+  // 🔹 구글 로그인 버튼 클릭 시
   const handleLogin = async () => {
     try {
-      const user = await signInWithGoogle()
-      console.log("✅ 로그인 성공:", user)
+      const result = await signInWithPopup(auth, provider)
+      console.log("✅ 로그인 성공:", result.user)
 
-      // 성공 토스트 2초 표시
-      showToast("로그인 성공!", "success", 2000)
+      // 1) 토스트로 "로그인 성공" 표시 (2초)
+      showToast("로그인 성공!", false, 2000)
 
-      // 2초 후 Framer /main 페이지로 이동
+      // 2) 2초 후 프레이머 /main 페이지로 이동
       setTimeout(() => {
         window.top.location.href = "https://moccasin-room-455176.framer.app/main"
       }, 2000)
     } catch (error) {
       console.error("❌ 로그인 실패:", error)
-      // 실패 토스트 3초 표시
-      showToast(error.message || "로그인 실패!", "error", 3000)
+      // 실패 토스트 (3초)
+      showToast(error.message || "로그인 실패!", true, 3000)
     }
   }
 
   return (
     <div style={containerStyle}>
-      {/* (선택) 상단 영역 */}
-      <div style={headerStyle}>
-        <h2>Google Login</h2>
-        <p>필요없는 문구 대신 원하는 안내 텍스트를 쓰세요.</p>
-      </div>
+      <h2>Google Login</h2>
+      <p>안내 문구나 로고 등을 여기에 배치할 수 있습니다.</p>
 
-      {/* 구글 로그인 버튼 (화면 하단 근처) */}
-      <div style={bottomAreaStyle}>
-        <button onClick={handleLogin} style={googleButtonStyle}>
-          <img
-            src="https://e7.pngegg.com/pngimages/734/947/png-clipart-google-logo-google-g-logo-icons-logos-emojis-tech-companies-thumbnail.png"
-            alt="G"
-            style={{ width: 20, marginRight: 8 }}
-          />
-          Sign in with Google
-        </button>
-      </div>
+      {/* 🔹 구글 로그인 버튼 */}
+      <button onClick={handleLogin} style={googleButtonStyle}>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+          alt="Google Logo"
+          style={{ width: 20, marginRight: 8 }}
+        />
+        Sign in with Google
+      </button>
 
-      {/* 토스트바 (화면 하단 고정) */}
+      {/* 🔹 토스트 (화면 하단 고정) */}
       {toastVisible && (
-        <div
-          style={{
-            ...toastStyle,
-            backgroundColor: toastType === "success" ? "#4caf50" : "#f44336",
-          }}
-        >
+        <div style={{ ...toastStyle, backgroundColor: toastColor }}>
           {toastMessage}
         </div>
       )}
@@ -88,52 +82,42 @@ function App() {
 
 export default App
 
-// 전체 컨테이너: 세로 100vh, 아래쪽에 버튼 위치
+// 🔹 스타일들
+
+// 화면 중앙 배치용
 const containerStyle = {
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-between",
   alignItems: "center",
+  justifyContent: "center",
   height: "100vh",
-  margin: 0,
-  padding: 0,
-}
-
-// 상단 영역
-const headerStyle = {
-  marginTop: 40,
-  textAlign: "center",
-}
-
-// 하단 버튼 영역
-const bottomAreaStyle = {
-  marginBottom: 60, // 버튼이 화면 하단에서 60px 정도 위에 위치
+  fontFamily: "Arial, sans-serif",
 }
 
 // 구글 로그인 버튼 스타일
 const googleButtonStyle = {
-  display: "flex",
+  display: "inline-flex",
   alignItems: "center",
   backgroundColor: "#fff",
   color: "#444",
-  border: "1px solid #ccc",
-  borderRadius: 4,
+  border: "1px solid #ddd",
+  borderRadius: 24, // pill 모양
   padding: "10px 20px",
-  fontSize: 16,
+  fontSize: 14,
   cursor: "pointer",
   boxShadow: "0 2px 2px rgba(0,0,0,0.2)",
 }
 
-// 토스트 스타일 (하단 고정)
+// 토스트 (화면 하단)
 const toastStyle = {
   position: "fixed",
   bottom: 20,
   left: "50%",
   transform: "translateX(-50%)",
   color: "#fff",
-  padding: "12px 20px",
+  padding: "10px 16px",
   borderRadius: 4,
-  fontSize: 16,
+  fontSize: 14,
   boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
   zIndex: 9999,
 }

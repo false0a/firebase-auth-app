@@ -10,6 +10,7 @@ const firebaseConfig = {
     appId: "1:834946972945:web:554deb37314634d3f660b0",
 }
 
+// Firebase 초기화
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 const provider = new GoogleAuthProvider()
@@ -17,8 +18,10 @@ const provider = new GoogleAuthProvider()
 export async function signInWithGoogle() {
   try {
     const result = await signInWithPopup(auth, provider)
+    console.log("✅ 로그인 성공:", result.user)
     return result.user
   } catch (error) {
+    console.error("❌ 로그인 실패:", error)
     throw error
   }
 }
