@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app"
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDZaaHJwsIA34Kwx1Uz7m1ZuaUCBldS-Lk",
+    authDomain: "ploka-be736.firebaseapp.com",
+    projectId: "ploka-be736",
+    storageBucket: "ploka-be736.appspot.com",
+    messagingSenderId: "834946972945",
+    appId: "1:834946972945:web:554deb37314634d3f660b0",
 }
 
 const app = initializeApp(firebaseConfig)
